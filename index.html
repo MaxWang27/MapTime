@@ -3,6 +3,7 @@
   <title>My Maptime map11  </title>
   <link rel="stylesheet" href="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.css" />
   <script src="http://cdn.leafletjs.com/leaflet-0.7.3/leaflet.js"></script>
+  <script src='//api.tiles.mapbox.com/mapbox.js/plugins/leaflet-omnivore/v0.2.0/leaflet-omnivore.min.js'></script>
   <style>
   #map { height: 90%; }
   </style>
@@ -16,9 +17,21 @@
 </body>
 <script>
 var map = L.map('map');
-map.setView([51.505, -0.09], 13);
+map.setView([51.04938029577453, -114.10263061523436], 12);
 
-var layer = L.tileLayer('http://tile.stamen.com/toner/{z}/{x}/{y}.jpg');
+var layer = L.tileLayer('http://tile.stamen.com/watercolor/{z}/{x}/{y}.jpg');
 layer.addTo(map);
+
+var data = omnivore.geojson('map.geojson').on('ready', function() {
+    data.eachLayer(function(layer) {
+      layer.bindPopup(layer.feature.properties.name);
+    });
+});
+
+data.addTo(map)
+
+//var geolayer = omnivore.geojson('map.geojson');
+//geolayer.addTo(map);
+
 </script>
 </htmL>
